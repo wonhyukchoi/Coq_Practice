@@ -350,12 +350,7 @@ Proof.
         admit.
         admit.
       * admit.
-    + pose proof(IHd (fun st => P st /\ (~(bassn b st))) Q) as H0.
-      destruct (VC d Q) as [wp sd].
-      apply H0.
-
-
-      pose proof(IHd (fun st => P st /\ beval st b = true) P) as I1.
+    + pose proof(IHd (fun st => P st /\ beval st b = true) P) as I1.
       destruct (VC d P) as [wp sd].
       eapply I1.
       intros.
