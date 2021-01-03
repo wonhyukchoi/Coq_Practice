@@ -275,11 +275,35 @@ Theorem ceval_deterministic: forall (c:com) st st1 st2 s1 s2,
      c / st \\ s2 / st2 ->
      st1 = st2 /\ s1 = s2.
 Proof.
-  intros c st st1 st2 s1 s2 E1 E2.
-  generalize dependent st2.
-  induction E1; intros st2 E2.
-  - inversion E2. subst. split; reflexivity.
-  - inversion E2. subst. split; reflexivity.
-  - inversion E2. subst. split; reflexivity.
-  - 
-
+  intros c st st1 st2 s1 s2 E1.
+  revert st2 s2.
+  induction E1; intros st2 s2 E2; inversion E2; subst.
+  - split; reflexivity.
+  - split; reflexivity.
+  - split; reflexivity.
+  - apply IHE1_1 in H1. destruct H1.
+        subst. apply IHE1_2. assumption.
+  - apply IHE1_1 in H4. inversion H4. discriminate.
+  - apply IHE1 in H1. inversion H1. discriminate.
+  - split; try reflexivity. apply IHE1 in H4.
+    inversion H4. assumption.
+  - apply IHE1 in H7. assumption.
+  - rewrite H in H6. discriminate.
+  - rewrite H in H6. discriminate.
+  - apply IHE1 in H7. assumption.
+  - split;reflexivity.
+  - rewrite H in H2. discriminate.
+  - rewrite H in H2. discriminate.
+  - rewrite H in H5. discriminate.
+  - split; try reflexivity. apply IHE1 in H6.
+    inversion H6. assumption.
+  - split;try reflexivity. apply IHE1 in H3.
+    inversion H3. discriminate.
+  - rewrite H in H5. discriminate.
+  - split; try reflexivity. apply IHE1_1 in H6.
+    inversion H6. discriminate.
+  - apply IHE1_1 in H3. inversion H3.
+    split; try reflexivity.
+    eapply IHE1_2. rewrite H0.
+    apply H7.
+Qed.
